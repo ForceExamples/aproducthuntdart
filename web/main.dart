@@ -39,26 +39,11 @@ class HuntController {
     forceClient.connect();
         
     forceClient.onConnected.listen((ConnectEvent ce) {
-//        forceClient.on("hunters", (e, sender) {
-//          print(e.json);
-//          
-//          var value = e.json;
-//          
-//          if (value is Map) {
-//            print("is map!");
-//          } else if (value is String) {
-//            print("is a String!");
-//          } else {
-//            print("not a string and not a map!");
-//          }
-//          hunts.insert(0, new Hunt.fromJson(value));
-//        });
         hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL));
     });
   }
 
   void update(id, data) {
-    print("$id is a $data");
     if (data is Map) { 
       var hunt = new Hunt.fromJson(data);
       
