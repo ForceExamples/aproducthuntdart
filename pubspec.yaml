@@ -1,0 +1,14 @@
+name: angularforce
+description: A sample web application with dart force
+dependencies:
+  browser: any
+  force: 
+    git: 
+      url: git://github.com/ForceUniverse/dart-force.git
+      ref: experimental
+  angular: 1.0.0
+  bigcargo: 
+       git: git://github.com/ForceUniverse/bigcargo
+  cargo: any
+transformers:
+- angular
