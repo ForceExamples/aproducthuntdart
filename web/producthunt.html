@@ -26,7 +26,7 @@
 
         <div class="pure-g" ng-repeat="hunt in hunts">
           <div class="pure-u-1-4 text-bold"><div class="pure-input-1"><a ng-click="update(hunt.id, hunt.data)" href="#">{{hunt.data.point}}</a></div></div>
-          <div class="pure-u-3-4"><div class="pure-input-1"><a href="{{hunt.data.url}}">{{hunt.data.name}}</a></div></div>
+          <div class="pure-u-3-4"><div class="pure-input-1"><a target="_blank" href="{{hunt.data.url}}">{{hunt.data.name}}</a></div></div>
         </div>
       </div>
 
