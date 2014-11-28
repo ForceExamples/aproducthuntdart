@@ -52,6 +52,10 @@ class HuntController {
     }
   }
   
+  void remove(id) {
+     hunts.remove(id);
+  }
+  
   // Send message on the channel
   void send() {
     if(name != "" && url != "") {

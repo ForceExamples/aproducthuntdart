@@ -27,24 +27,6 @@ main() {
       // Tell Force what the start page is!
       fs.server.use("/", (req, model) => "producthunt");
      
-//      fs.on("hunt", (fme, sender) {
-//         cargo.add("messages", fme.json);
-//         fs.send("new", fme.json);
-//      });
-//      
-//      // send saved items to the client
-//      fs.on("launch", (fme, sender) {
-//          cargo.getItem("messages").then((obj) {
-//            if (obj !=null && obj is List) {
-//              List list = obj;
-//              for (var item in list) {
-//                // send to socket id that just connected to the server.
-//                sender.reply("new", item);
-//              }
-//            } 
-//          });
-//        });
-      
       fs.publish("hunters", cargo);
     
     });
