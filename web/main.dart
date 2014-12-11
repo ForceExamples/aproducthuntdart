@@ -59,7 +59,7 @@ class HuntController {
   // Send message on the channel
   void send() {
     if(name != "" && url != "") {
-      forceClient.set("hunters", "hunt", new Hunt(name, url).toJson());
+      hunts.set(new Hunt(name, url).toJson());
     }
   }
 }

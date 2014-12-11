@@ -27,7 +27,10 @@ main() {
       // Tell Force what the start page is!
       fs.server.use("/", (req, model) => "producthunt");
      
-      fs.publish("hunters", cargo);
+      fs.publish("hunters", cargo, (data, params, id) {
+        print("send some data $data");
+        return true;
+      });
     
     });
 }
