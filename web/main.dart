@@ -44,12 +44,10 @@ class HuntController {
   }
 
   void update(id, data) {
-    if (data is Map) { 
       var hunt = new Hunt.fromJson(data);
       
       hunt.point += 1;
       hunts.update(id, hunt);
-    }
   }
   
   void remove(id) {

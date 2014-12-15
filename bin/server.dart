@@ -7,7 +7,7 @@ import 'dart:async';
 
 main() {
   // You can also use a memory implementation here, just switch the CargoMode to MEMORY
-  Cargo cargo = new Cargo(MODE: CargoMode.MONGODB, conf: {"collection": "store", "address": "mongodb://127.0.0.1/test" });
+  Cargo cargo = new Cargo(MODE: CargoMode.MONGODB, conf: {"address": "mongodb://127.0.0.1/test" });
   
   // Create a force server
   ForceServer fs = new ForceServer(port: 4040, 
@@ -25,9 +25,9 @@ main() {
       }
       
       // Tell Force what the start page is!
-      fs.server.use("/", (req, model) => "producthunt");
+      fs.server.static("/", "producthunt.html");
      
-      fs.publish("hunters", cargo, (data, params, id) {
+      fs.publish("hunters", cargo, filter: (data, params, id) {
         print("send some data $data");
         return true;
       });
