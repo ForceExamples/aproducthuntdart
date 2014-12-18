@@ -1,7 +1,6 @@
 library aproducthuntdart;
 
 import 'package:force/force_serverside.dart';
-import 'package:mustache4dart/mustache4dart.dart';
 import 'package:bigcargo/bigcargo.dart';
 import 'dart:async';
 
@@ -25,6 +24,7 @@ main() {
      
       fs.publish("hunters", cargo, validate: (CargoPackage fcp, Sender sender) {
         if (fcp.json!=null) {
+          // Check if the url is a url ...
           Hunt hunt = new Hunt.fromJson(fcp.json);
           if (!hunt.url.startsWith("http")) {
             fcp.cancel();
