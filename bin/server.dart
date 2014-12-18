@@ -20,19 +20,11 @@ main() {
   
   // wait until our forceserver is been started and our connection with the persistent layer is done!
   Future.wait([fs.start(), cargo.start()]).then((_) { 
-      // we need to change {{ into [[ because of angular
-      if (fs.server.viewRender is MustacheRender) {
-         MustacheRender mustacheRender = fs.server.viewRender;
-         mustacheRender.delimiter = new Delimiter('[[', ']]');
-      }
-      
       // Tell Force what the start page is!
       fs.server.static("/", "producthunt.html");
      
       fs.publish("hunters", cargo, validate: (CargoPackage fcp, Sender sender) {
         if (fcp.json!=null) {
-          print("send some data ${fcp.json}");
-          
           Hunt hunt = new Hunt.fromJson(fcp.json);
           if (!hunt.url.startsWith("http")) {
             fcp.cancel();
