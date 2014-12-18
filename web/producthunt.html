@@ -23,7 +23,7 @@
             <legend class="form-legend">Product Hunt</legend>
           </fieldset>
         </form>
-
+        
         <div class="pure-g" ng-repeat="hunt in hunts">
           <div class="pure-u-1-4 text-bold"><div class="pure-input-1"><a ng-click="update(hunt.id, hunt.data)" href="#">{{hunt.data.point}}</a></div></div>
           <div class="pure-u-3-4"><div class="pure-input-1"><a target="_blank" href="{{hunt.data.url}}">{{hunt.data.name}}</a> - <a ng-click="remove(hunt.id)" href="#">X</a></div></div>
@@ -32,6 +32,7 @@
 
       <div id="input-box" class="pure-u-1-1 content">
         <form class="pure-form pure-g">
+          <div class="pure-u-1-1" style="color: red;">{{error}}</div>
           <div class="pure-u-1-2">
             <input class="pure-input-1" ng-model="name" placeholder="Product naam">
           </div>

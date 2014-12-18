@@ -5,6 +5,8 @@ import 'package:mustache4dart/mustache4dart.dart';
 import 'package:bigcargo/bigcargo.dart';
 import 'dart:async';
 
+import '../web/lib/hunt.dart';
+
 main() {
   // You can also use a memory implementation here, just switch the CargoMode to MEMORY
   Cargo cargo = new Cargo(MODE: CargoMode.MONGODB, conf: {"address": "mongodb://127.0.0.1/test" });
@@ -27,9 +29,17 @@ main() {
       // Tell Force what the start page is!
       fs.server.static("/", "producthunt.html");
      
-      fs.publish("hunters", cargo, filter: (data, params, id) {
-        print("send some data $data");
-        return true;
+      fs.publish("hunters", cargo, validate: (CargoPackage fcp, Sender sender) {
+        if (fcp.json!=null) {
+          print("send some data ${fcp.json}");
+          
+          Hunt hunt = new Hunt.fromJson(fcp.json);
+          if (!hunt.url.startsWith("http")) {
+            fcp.cancel();
+            
+            sender.reply("notify", "url not correct!");
+          }
+        }
       });
     
     });

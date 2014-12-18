@@ -8,28 +8,14 @@ import 'package:angular/application_factory.dart';
 
 import 'package:cargo/cargo_client.dart';
 
-class Hunt {
-  String name, url;
-  
-  int point;
-
-  Hunt(this.name, this.url, {this.point: 0});
-
-  Hunt.fromJson(Map data) {
-    print("going to transform data");
-    print(data);
-    name    = data["name"];
-    url = data["url"];
-    point = data["point"];
-  }
-
-  Map toJson() => {"name": name, "url": url, "point": point};
-}
+import 'lib/hunt.dart';
 
 @Injectable()
 class HuntController {
   String name = "";
   String url = "";
+  
+  String error = "";
 
   ForceClient forceClient;
   ViewCollection hunts;
@@ -40,6 +26,10 @@ class HuntController {
         
     forceClient.onConnected.listen((ConnectEvent ce) {
         hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL));
+    });
+    
+    forceClient.on("notify", (message, sender) {
+      error = message.json;
     });
   }
 
@@ -58,6 +48,8 @@ class HuntController {
   void send() {
     if(name != "" && url != "") {
       hunts.set(new Hunt(name, url).toJson());
+      // reset error field
+      error = "";
     }
   }
 }
