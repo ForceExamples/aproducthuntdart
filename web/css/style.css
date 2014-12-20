@@ -129,3 +129,11 @@ h3 {
   -moz-transition: background 0.1s ease;
   transition: background 0.1s ease;
 }
+
+.post .url .description {
+  color: #999999;
+  font-size: 17px;
+  margin: 5px 0 0 0px;
+  display: block;
+  line-height: 20px;
+}

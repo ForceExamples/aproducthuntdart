@@ -35,8 +35,8 @@ class HuntController {
 
   void update(id, data) {
       var hunt = new Hunt.fromJson(data);
-      
       hunt.point += 1;
+      
       hunts.update(id, hunt);
   }
   
