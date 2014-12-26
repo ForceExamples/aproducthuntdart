@@ -25,7 +25,7 @@ class HuntController {
     forceClient.connect();
         
     forceClient.onConnected.listen((ConnectEvent ce) {
-        hunts = forceClient.subscribing("hunters", new Cargo(MODE: CargoMode.LOCAL));
+        hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL));
     });
     
     forceClient.on("notify", (message, sender) {
@@ -47,18 +47,18 @@ class HuntController {
     Map params = new Map();
     params['date'] = {'day': (now.day + timeFactor), 'month': now.month, 'year': now.year};
         
-    hunts = forceClient.subscribing("hunters", new Cargo(MODE: CargoMode.LOCAL), params: params);
+    hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL), params: params);
   }
 
-  void update(id, data) {
-      var hunt = new Hunt.fromJson(data);
+  void update(key, value) {
+      var hunt = new Hunt.fromJson(value);
       hunt.point += 1;
       
-      hunts.update(id, hunt);
+      hunts.update(key, hunt);
   }
   
-  void remove(id) {
-     hunts.remove(id);
+  void remove(key) {
+     hunts.remove(key);
   }
   
   // Send message on the channel
