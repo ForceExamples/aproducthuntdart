@@ -25,12 +25,29 @@ class HuntController {
     forceClient.connect();
         
     forceClient.onConnected.listen((ConnectEvent ce) {
-        hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL));
+        hunts = forceClient.subscribing("hunters", new Cargo(MODE: CargoMode.LOCAL));
     });
     
     forceClient.on("notify", (message, sender) {
       error = message.json;
     });
+  }
+  
+  void today() {
+    _addDateParams(0);
+  }
+  
+  void yesterday() {
+    _addDateParams(-1);
+  }
+  
+  void _addDateParams(int timeFactor) {
+    DateTime now = new DateTime.now();
+        
+    Map params = new Map();
+    params['date'] = {'day': (now.day + timeFactor), 'month': now.month, 'year': now.year};
+        
+    hunts = forceClient.subscribing("hunters", new Cargo(MODE: CargoMode.LOCAL), params: params);
   }
 
   void update(id, data) {

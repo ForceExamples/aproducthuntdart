@@ -24,17 +24,24 @@
           </fieldset>
         </form>
         
+        <div class="pure-g">
+          <div class="pure-u-1-1">
+              <a href="#" ng-click="today()">Only today</a> -
+              <a href="#" ng-click="yesterday()">Yesterday</a>
+          </div>
+        </div>
+        
         <div class="pure-g" ng-repeat="hunt in hunts">
           <div class="pure-u-1-1 post">
             <div class="pure-input-1">
-              <div ng-click="update(hunt.id, hunt.data)" class="upvote">
+              <div ng-click="update(hunt.key, hunt.value)" class="upvote">
                 <a href="#" class="upvote-link"></a>
-                <span class="vote-count" data-vote-count="">{{hunt.data.point}}</span>
+                <span class="vote-count" data-vote-count="">{{hunt.value.point}}</span>
               </div>
               <div class="url">
-              <a class="title" target="_blank" href="{{hunt.data.url}}">{{hunt.data.name}}</a> 
-              - <a ng-click="remove(hunt.id)" href="#">X</a>
-              <span class="post-tagline description">added on {{hunt.data.date.day}}-{{hunt.data.date.month}}-{{hunt.data.date.year}} </span>
+              <a class="title" target="_blank" href="{{hunt.value.url}}">{{hunt.value.name}}</a> 
+              - <a ng-click="remove(hunt.key)" href="#">X</a>
+              <span class="post-tagline description">added on {{hunt.value.date.day}}-{{hunt.value.date.month}}-{{hunt.value.date.year}} </span>
               </div>
              </div>
           </div>
