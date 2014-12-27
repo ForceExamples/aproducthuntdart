@@ -1,6 +1,3 @@
-import 'dart:html';
-import 'dart:convert';
-
 import 'package:force/force_browser.dart';
 
 import 'package:angular/angular.dart';
@@ -9,6 +6,7 @@ import 'package:angular/application_factory.dart';
 import 'package:cargo/cargo_client.dart';
 
 import 'lib/hunt.dart';
+import 'lib/user_data.dart';
 
 @Injectable()
 class HuntController {
@@ -19,13 +17,20 @@ class HuntController {
 
   ForceClient forceClient;
   ViewCollection hunts;
+  UserData userData;
   
   HuntController() {
     forceClient = new ForceClient();
     forceClient.connect();
-        
+    
     forceClient.onConnected.listen((ConnectEvent ce) {
         hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL));
+        
+        // user loggin data
+         userData = new UserData();
+         userData.onUserData.listen((UserDataEvent ude) {
+           forceClient.initProfileInfo(ude.profile);
+         });
     });
     
     forceClient.on("notify", (message, sender) {
@@ -57,14 +62,11 @@ class HuntController {
       hunts.update(key, hunt);
   }
   
-  void remove(key) {
-     hunts.remove(key);
-  }
-  
   // Send message on the channel
   void send() {
     if(name != "" && url != "") {
-      hunts.set(new Hunt(name, url).toJson());
+      var author = (userData.profile!=null?userData.profile["displayName"]:'anonym');
+      hunts.set(new Hunt(name, url, author: author).toJson());
       // reset error field
       error = "";
     }

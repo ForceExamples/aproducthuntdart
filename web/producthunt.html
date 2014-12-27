@@ -40,15 +40,15 @@
               </div>
               <div class="url">
               <a class="title" target="_blank" href="{{hunt.value.url}}">{{hunt.value.name}}</a> 
-              - <a ng-click="remove(hunt.key)" href="#">X</a>
-              <span class="post-tagline description">added on {{hunt.value.date.day}}-{{hunt.value.date.month}}-{{hunt.value.date.year}} </span>
+              - <a ng-click="hunts.remove(hunt.key)" href="#">X</a>
+              <span class="post-tagline description">added on {{hunt.value.date.day}}-{{hunt.value.date.month}}-{{hunt.value.date.year}} by {{hunt.value.author}} </span>
               </div>
              </div>
           </div>
         </div>
       </div>
-
-      <div id="input-box" class="pure-u-1-1 content">
+     
+      <div id="input-box" class="pure-u-1-1 content" ng-if="userData.loggedIn == true">
         <form class="pure-form pure-g">
           <div class="pure-u-1-1" style="color: red;">{{error}}</div>
           <div class="pure-u-1-2">
@@ -60,7 +60,12 @@
           <button class="pure-u-1-1 pure-button pure-button-primary" ng-click="send()">Send</button>
         </form>
       </div>
-
+      
+      <div id="input-box" class="pure-u-1-1 content" ng-if="userData.loggedIn == false">
+        <form class="pure-form pure-g">
+          <button class="pure-u-1-1 pure-button pure-button-primary" ng-click="userData.login()">Login</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

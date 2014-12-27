@@ -10,5 +10,6 @@ dependencies:
   bigcargo: 
        git: git://github.com/ForceUniverse/bigcargo
   cargo: any
+  google_oauth2_client: ">=0.4.1 <0.5.0"
 transformers:
 - angular
