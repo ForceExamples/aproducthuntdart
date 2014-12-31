@@ -1,4 +1,4 @@
-name: angularforce
+name: aproducthunt
 description: A sample web application with dart force
 dependencies:
   browser: any
