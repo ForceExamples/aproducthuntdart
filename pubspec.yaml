@@ -3,9 +3,7 @@ description: A sample web application with dart force
 dependencies:
   browser: any
   force: 
-    git: 
-      url: git://github.com/ForceUniverse/dart-force.git
-      ref: experimental
+    git: git://github.com/ForceUniverse/dart-force.git
   angular: 1.0.0
   bigcargo: 
        git: git://github.com/ForceUniverse/bigcargo
