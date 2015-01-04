@@ -19,23 +19,30 @@ class HuntController {
   ViewCollection hunts;
   UserData userData;
   
+  Cargo cargo;
+  
   HuntController() {
     forceClient = new ForceClient();
     forceClient.connect();
+    cargo = new Cargo(MODE: CargoMode.LOCAL);
     
     forceClient.onConnected.listen((ConnectEvent ce) {
-        hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL));
+        hunts = forceClient.register("hunters", cargo, deserialize: Hunt.deserializeFromJson);
         
         // user loggin data
-         userData = new UserData();
-         userData.onUserData.listen((UserDataEvent ude) {
+        userData = new UserData();
+        userData.onUserData.listen((UserDataEvent ude) {
            forceClient.initProfileInfo(ude.profile);
-         });
+        });
     });
     
     forceClient.on("notify", (message, sender) {
       error = message.json;
     });
+  }
+  
+  void all() {
+    hunts = forceClient.register("hunters", cargo, deserialize: Hunt.deserializeFromJson);
   }
   
   void today() {
@@ -52,12 +59,11 @@ class HuntController {
     Map params = new Map();
     params['date'] = {'day': (now.day + timeFactor), 'month': now.month, 'year': now.year};
         
-    hunts = forceClient.register("hunters", new Cargo(MODE: CargoMode.LOCAL), params: params);
+    hunts = forceClient.register("hunters", cargo, deserialize: Hunt.deserializeFromJson, params: params);
   }
 
-  void update(key, value) {
-      var hunt = new Hunt.fromJson(value);
-      hunt.point += 1;
+  void update(key, Hunt hunt) {
+      hunt.vote();
       
       hunts.update(key, hunt);
   }
@@ -66,7 +72,7 @@ class HuntController {
   void send() {
     if(name != "" && url != "") {
       var author = (userData.profile!=null?userData.profile["displayName"]:'anonym');
-      hunts.set(new Hunt(name, url, author: author).toJson());
+      hunts.set(new Hunt(name, url, author: author));
       // reset error field
       error = "";
     }
