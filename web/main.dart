@@ -27,7 +27,8 @@ class HuntController {
     cargo = new Cargo(MODE: CargoMode.LOCAL);
     
     forceClient.onConnected.listen((ConnectEvent ce) {
-        hunts = forceClient.register("hunters", cargo, deserialize: Hunt.deserializeFromJson);
+        Options options = new Options(limit: 5, revert: true);
+        hunts = forceClient.register("hunters", cargo, deserialize: Hunt.deserializeFromJson, options: options);
         
         // user loggin data
         userData = new UserData();
@@ -55,11 +56,14 @@ class HuntController {
   
   void _addDateParams(int timeFactor) {
     DateTime now = new DateTime.now();
+    
+    // revert the list! Latest on top ...
+    Options options = new Options(revert: true);
         
     Map params = new Map();
     params['date'] = {'day': (now.day + timeFactor), 'month': now.month, 'year': now.year};
         
-    hunts = forceClient.register("hunters", cargo, deserialize: Hunt.deserializeFromJson, params: params);
+    hunts = forceClient.register("hunters", cargo, options: options, deserialize: Hunt.deserializeFromJson, params: params);
   }
 
   void update(key, Hunt hunt) {

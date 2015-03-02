@@ -28,5 +28,8 @@ class Hunt {
   }
   
   Map toJson() => {"name": name, "url": url, "point": point, "author": author, "date": { "day": date.day, "month": date.month, "year": date.year }};
-  
+
+  String toString() {
+    return name;
+  }
 }
